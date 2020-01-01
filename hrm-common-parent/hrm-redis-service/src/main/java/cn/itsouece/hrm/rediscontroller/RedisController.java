@@ -19,11 +19,22 @@ public class RedisController {
     @Autowired
     private RedisUtils redisUtils;
 
+
+    /**
+     *
+     * @param key
+     * @param value
+     */
     @RequestMapping(value = "/set",method = RequestMethod.POST)
     public void set(String key,String value){
         redisUtils.set(key,value );
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     @RequestMapping(value = "/get",method = RequestMethod.GET)
     public String get(String key){
         String value = redisUtils.get(key);

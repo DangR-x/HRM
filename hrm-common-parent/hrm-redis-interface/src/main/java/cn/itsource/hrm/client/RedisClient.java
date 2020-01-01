@@ -5,6 +5,7 @@ import cn.itsource.hrm.client.impl.RedisClientFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @Description TODO
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface RedisClient {
 
     @RequestMapping(value = "/set",method = RequestMethod.POST)
-    public void set(String key,String value);
+    public void set(@RequestParam("key") String key, @RequestParam("value") String value);
 
     @RequestMapping(value = "/get",method = RequestMethod.GET)
-    public String get(String key);
+    public String get(@RequestParam("key") String key);
+
+
 }

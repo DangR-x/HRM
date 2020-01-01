@@ -11,6 +11,7 @@
 
     <artifactId>hrm-course-interface</artifactId>
     <dependencies>
+
         <dependency>
             <groupId>cn.itsource</groupId>
             <artifactId>hrm-basic-util</artifactId>

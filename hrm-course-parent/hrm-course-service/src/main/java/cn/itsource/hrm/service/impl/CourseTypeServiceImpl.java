@@ -1,20 +1,27 @@
 package cn.itsource.hrm.service.impl;
 
 import cn.itsource.basic.util.PageList;
+import cn.itsource.hrm.client.RedisClient;
 import cn.itsource.hrm.domain.CourseType;
 import cn.itsource.hrm.mapper.CourseTypeMapper;
 import cn.itsource.hrm.query.CourseTypeQuery;
 import cn.itsource.hrm.service.ICourseTypeService;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.DoubleRange;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -31,12 +38,27 @@ public class CourseTypeServiceImpl extends ServiceImpl<CourseTypeMapper, CourseT
     @Autowired
     private CourseTypeMapper courseTypeMapper;
 
+    @Autowired
+    private RedisClient redisClient;
+
+    private final String COURSE_TYPE="hrm:courseType:dataTree";
+
     @Override
     public List<CourseType> getTreeDate() {
        /* List<CourseType> parent = getParentBypid(0L);*/
-        List<CourseType> parent = getFirstlenven();
+       /* List<CourseType> parent = getFirstLenvenMap();*/
+        String courseTypesStr = redisClient.get(COURSE_TYPE);
+        List<CourseType> list = new ArrayList<>();
+        if(StringUtils.isNotEmpty(courseTypesStr)){
+            list = JSONObject.parseArray(courseTypesStr, CourseType.class);
+        }else {
+            list = getFirstLenvenMap();
+            String jsonString = JSONObject.toJSONString(list);
+            redisClient.set(COURSE_TYPE, jsonString);
+        }
 
-        return parent;
+
+        return list;
     }
     //根据数据库中的parentid可以快速确定第一个父级，表中设计的parentid=0的都是第一父级
     //用递归的方法
@@ -74,11 +96,46 @@ public class CourseTypeServiceImpl extends ServiceImpl<CourseTypeMapper, CourseT
                 }
             }
         }
-
-
         return firstlenven;
-
     }
 
+    //map循环
+    public List<CourseType> getFirstLenvenMap(){
+
+        List<CourseType> firstlenven = new ArrayList<>();
+        List<CourseType> courseTypes = courseTypeMapper.selectList(null);
+
+        Map<Long, CourseType> map = new HashMap<>();
+
+        for (CourseType courseType : courseTypes) {
+            map.put(courseType.getId(), courseType);
+        }
+
+        for (CourseType courseType : courseTypes) {
+            //如果该courseType的父级id为o那么这个就是父级元素
+            if(courseType.getPid().longValue()==0L){
+                firstlenven.add(courseType);
+
+            }else {
+                //否则依据父级id查询出父级对象，然后放入父级对象的children中
+                CourseType parent = map.get(courseType.getPid());
+                if(parent!=null){
+                    parent.getChildren().add(courseType);
+                }
+            }
+
+        }
+        return firstlenven;
+    }
+
+    /**
+     * 增删改的同步操作
+     * 有变动之后就从数据库中查出来然后转为json字符串保存进redis中去
+     */
+    public void snycource(){
+        List<CourseType> parent = getFirstLenvenMap();
+        String jsonString = JSONObject.toJSONString(parent);
+        redisClient.set(COURSE_TYPE, jsonString);
+    }
 
 }

@@ -11,21 +11,33 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 @Component
 @Scope("singleton")
-public enum RedisUtils {
-    INSTANCE;
-    static JedisPool jedisPool = null;
+public class RedisUtils {
 
-    static {
-        //1 创建连接池配置对象
+    private String host = "127.0.0.1";
+    private Integer port = 6379;
+    private String password = "itsource";
+    private Integer maxIdle = 1;
+    private Integer maxTotal = 11;
+    private Long maxWaitMillis = 10*1000L;
+    private boolean testOnBorrow = true;
+    JedisPool jedisPool = null;
+
+    public RedisUtils(){
+
         JedisPoolConfig config = new JedisPoolConfig();
         //2 进行配置-四个配置
-        config.setMaxIdle(1);//最小连接数
-        config.setMaxTotal(11);//最大连接数
-        config.setMaxWaitMillis(10 * 1000L);//最长等待时间
-        config.setTestOnBorrow(true);//测试连接时是否畅通
-        //3 通过配置对象创建连接池对象
-        jedisPool = new JedisPool(config, "127.0.0.1", 6379, 10 * 1000, "root");
+        config.setMaxIdle(maxIdle);
+        //最小连接数
+        config.setMaxTotal(maxTotal);
+        //最大连接数
+        config.setMaxWaitMillis(maxWaitMillis);
+        //最长等待时间
+        config.setTestOnBorrow(testOnBorrow);
+        // 测试连接时是否畅通
+        // 3 通过配置对象创建连接池对象
+        jedisPool = new JedisPool(config, host, port, maxWaitMillis.intValue()/*, password*/);
     }
+
 
     //获取连接
     public Jedis getSource() {

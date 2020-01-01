@@ -1,0 +1,19 @@
+server:
+  port: 1299
+
+spring:
+  application:
+    name:  CONFIG-SERVER
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/DangR-x/config-repository.git   #链接git仓库中的config项目获取初始化文件
+
+
+eureka:
+  instance:
+    prefer-ip-address: true  #以ip地址注册进入eureka
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/   #指定eureka服务器地址，
