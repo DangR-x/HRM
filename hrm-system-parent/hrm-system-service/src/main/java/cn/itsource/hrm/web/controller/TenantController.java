@@ -5,6 +5,7 @@ import cn.itsource.hrm.domain.Tenant;
 import cn.itsource.hrm.query.TenantQuery;
 import cn.itsource.basic.util.AjaxResult;
 import cn.itsource.basic.util.PageList;
+import cn.itsource.hrm.web.dto.TenantDto;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -83,4 +84,16 @@ public class TenantController {
         Page<Tenant> page = tenantService.page(new Page<Tenant>(query.getPage(), query.getRows()));
         return new PageList<>(page.getTotal(),page.getRecords());
     }
+
+    @PostMapping("/register")
+    public AjaxResult register(@RequestBody TenantDto tenantDto){
+
+
+
+
+        return AjaxResult.me();
+    }
+
+
+
 }

@@ -90,4 +90,9 @@ public class CourseTypeController {
         List<CourseType> treeDate = courseTypeService.getTreeDate();
         return treeDate;
     }
+
+    @PostMapping("/createes")
+    public AjaxResult createes(@RequestBody List<CourseType> courseTypes){
+        return AjaxResult.me();
+    }
 }

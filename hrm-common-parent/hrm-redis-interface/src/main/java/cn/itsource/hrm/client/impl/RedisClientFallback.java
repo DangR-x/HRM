@@ -20,4 +20,6 @@ public class RedisClientFallback implements RedisClient {
     public String get(String key) {
         return "数据获取失败！";
     }
+
+
 }

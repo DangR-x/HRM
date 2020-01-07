@@ -8,7 +8,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/DangR-x/config-repository.git   #链接git仓库中的config项目获取初始化文件
+          uri: https://github.com/DangR-x/config-repository.git  #链接git仓库中的config项目获取初始化文件
 
 
 eureka:

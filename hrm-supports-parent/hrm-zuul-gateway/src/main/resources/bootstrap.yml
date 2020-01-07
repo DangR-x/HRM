@@ -17,6 +17,8 @@ spring:
         service-id: CONFIG-SERVER  #通过配置中心服务端的服务名获取集群的注册列表
   profiles:
     active: dev  #选择环境
+
+    
 #配置zuul的ribbon的超时时间
 zuul:
   ReadTimout: 5000

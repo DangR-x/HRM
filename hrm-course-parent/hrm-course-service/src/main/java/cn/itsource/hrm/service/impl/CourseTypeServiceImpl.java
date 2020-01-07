@@ -47,6 +47,7 @@ public class CourseTypeServiceImpl extends ServiceImpl<CourseTypeMapper, CourseT
     public List<CourseType> getTreeDate() {
        /* List<CourseType> parent = getParentBypid(0L);*/
        /* List<CourseType> parent = getFirstLenvenMap();*/
+       //通过feign调用redis查询出redis中的数据
         String courseTypesStr = redisClient.get(COURSE_TYPE);
         List<CourseType> list = new ArrayList<>();
         if(StringUtils.isNotEmpty(courseTypesStr)){

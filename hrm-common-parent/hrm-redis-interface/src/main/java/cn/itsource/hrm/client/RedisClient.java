@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface RedisClient {
 
     @RequestMapping(value = "/set",method = RequestMethod.POST)
-    public void set(@RequestParam("key") String key, @RequestParam("value") String value);
+    void set(@RequestParam("key") String key, @RequestParam("value") String value);
 
     @RequestMapping(value = "/get",method = RequestMethod.GET)
-    public String get(@RequestParam("key") String key);
+    String get(@RequestParam("key") String key);
 
 
 }

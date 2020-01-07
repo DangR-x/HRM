@@ -14,6 +14,12 @@
     <modules>
         <module>hrm-redis-interface</module>
         <module>hrm-redis-service</module>
+        <module>hrm-fastdfs-interface</module>
+        <module>hrm-fastdfs-service</module>
+        <module>hrm-page-interface</module>
+        <module>hrm-page-service</module>
+        <module>hrm-es-interface</module>
+        <module>hrm-es-service</module>
     </modules>
 
 

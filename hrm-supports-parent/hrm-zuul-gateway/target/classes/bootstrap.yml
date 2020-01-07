@@ -18,3 +18,9 @@ spring:
   profiles:
     active: dev  #选择环境
 
+    
+#配置zuul的ribbon的超时时间
+zuul:
+  ReadTimout: 5000
+  SocketTimeout: 5000
+
