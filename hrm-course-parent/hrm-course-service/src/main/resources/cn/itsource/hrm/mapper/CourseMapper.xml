@@ -18,6 +18,21 @@
         <result column="start_time" property="startTime" />
         <result column="end_time" property="endTime" />
         <result column="pic" property="pic" />
+        <association property="courseType" javaType="cn.itsource.hrm.domain.CourseType">
+            <id column="cpid" property="id"/>
+            <result column="cpname" property="name"/>
+        </association>
     </resultMap>
+
+    <!--online-->
+    <!--mybatis中有一个配置可以将下划线在映射的时候自动转为驼峰-->
+    <update id="online">
+        UPDATE t_course
+        SET status=1,start_time=#{time}
+        where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </update>
 
 </mapper>

@@ -9,3 +9,7 @@ spring:
         service-id: CONFIG-SERVER  #通过配置中心服务端的服务名获取集群的注册列表
   profiles:
     active: dev  #选择环境
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch  #集群名称
+      cluster-nodes: 172.0.0.0:9300  #集群节点

@@ -83,4 +83,16 @@ public class CourseController {
         Page<Course> page = courseService.page(new Page<Course>(query.getPage(), query.getRows()));
         return new PageList<>(page.getTotal(),page.getRecords());
     }
+
+    @GetMapping("/uponline")
+    public AjaxResult uponline(@RequestBody List<Long> ids){
+        try {
+            courseService.uponline(ids);
+            return AjaxResult.me();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return AjaxResult.me().setSuccess(false).setMessage("发布失败！");
+        }
+
+    }
 }

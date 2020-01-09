@@ -41,7 +41,9 @@ public class RedisUtils {
 
     //获取连接
     public Jedis getSource() {
-        return jedisPool.getResource();
+        Jedis resource = jedisPool.getResource();
+
+        return resource;
     }
 
     //关闭资源

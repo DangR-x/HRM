@@ -1,8 +1,8 @@
-package cn.itsource.hrm.doucument.clienk.impl;
+package cn.itsource.hrm.clienk.impl;
 
 import cn.itsource.basic.util.AjaxResult;
 import cn.itsource.hrm.doucument.CourseDocument;
-import cn.itsource.hrm.doucument.clienk.CourseClient;
+import cn.itsource.hrm.clienk.CourseClient;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

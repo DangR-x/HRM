@@ -1,8 +1,8 @@
-package cn.itsource.hrm.doucument.clienk;
+package cn.itsource.hrm.clienk;
 
 import cn.itsource.basic.util.AjaxResult;
+import cn.itsource.hrm.clienk.impl.CourseEsFallback;
 import cn.itsource.hrm.doucument.CourseDocument;
-import cn.itsource.hrm.doucument.clienk.impl.CourseEsFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
